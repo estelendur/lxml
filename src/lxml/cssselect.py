@@ -8,6 +8,10 @@ This is a thin wrapper around cssselect 0.7 or later.
 
 from __future__ import absolute_import
 
+from cffi import FFI
+import ctypes
+from ctypes import c_void_p, c_uint8
+
 from . import etree
 try:
     import cssselect as external_cssselect
@@ -15,6 +19,7 @@ except ImportError:
     raise ImportError(
         'cssselect does not seem to be installed. '
         'See http://packages.python.org/cssselect/')
+rust_lib = ctypes.cdll.LoadLibrary("../rxml/target/debug/librxml.so")
 
 
 SelectorSyntaxError = external_cssselect.SelectorSyntaxError
